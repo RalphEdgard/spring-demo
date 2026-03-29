@@ -1,7 +1,8 @@
 package org.example;
 
 
-import org.example.service.UserService;
+import org.example.entity.UserEntity;
+import org.example.repository.RealUserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +16,13 @@ public class Main {
         SpringApplication.run(Main.class, args);
     }
 
+    @Bean
+    public CommandLineRunner initData(RealUserRepository realUserRepository) {
+        return args -> {
+            realUserRepository.save(new UserEntity("ralph", "Transaction 1"));
+            realUserRepository.save(new UserEntity("Lil Homie", "Transaction 2"));
+        };
+    }
 //    @Bean
 //    public CommandLineRunner run(UserService userService) {
 //        //return args -> userService.outerMethod();

@@ -7,8 +7,8 @@ import org.example.component.LoggerUtil;
 
 @Component
 public class FieldInjectionComponent {
-    // this component will demonstrate field injection
-
+    // this component demonstrates field injection
+    // consturctor injection is preferred over field injection and then there is also setter injection but that is the least preferred
     @Autowired
     private LoggerUtil loggerUtil;
 

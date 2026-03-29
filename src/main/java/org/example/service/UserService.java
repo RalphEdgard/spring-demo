@@ -1,7 +1,9 @@
 package org.example.service;
 
 import org.example.component.FieldInjectionComponent;
+import org.example.entity.UserEntity;
 import org.example.model.UserMetadataModel;
+import org.example.repository.RealUserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.repository.UserRepository;
@@ -11,11 +13,13 @@ public class UserService {
 
     // This is constructor injection
     private final UserRepository userRepository;
+    private final RealUserRepository realUserRepository;
     private final FieldInjectionComponent fieldInjectionComponent;
 
     // This is the constructor whose dependencies were passed to the parameters
-    public UserService(UserRepository userRepository, FieldInjectionComponent fieldInjectionComponent) {
+    public UserService(UserRepository userRepository, RealUserRepository realUserRepository, FieldInjectionComponent fieldInjectionComponent) {
         this.userRepository = userRepository;
+        this.realUserRepository = realUserRepository;
         this.fieldInjectionComponent = fieldInjectionComponent;
     }
 
@@ -36,7 +40,11 @@ public class UserService {
         System.out.println("Transactional method executed");
         throw new RuntimeException("rolling back forced!");
     }
-
+    @Transactional
+    public UserMetadataModel getActualData(int index) {
+        UserEntity userEntity = realUserRepository.findAll().get(index);
+        return new UserMetadataModel(userEntity.getName(), userEntity.getTranaction());
+    }
     public String executedLoggerUtilFieldInjectionServiceLayer() {
         return fieldInjectionComponent.executedLoggerUtilFieldInjection();
     }

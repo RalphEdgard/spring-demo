@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.model.UserMetadataModel;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.example.component.LoggerUtil;
 import org.example.service.UserService;
@@ -36,5 +37,9 @@ public class TestController {
     public String testFieldInjection() {
         loggerUtil.log("Calling service for Field message...");
         return userService.executedLoggerUtilFieldInjectionServiceLayer();
+    }
+    @GetMapping("/getActualDataFromDb")
+    public UserMetadataModel getActualDataFromDb(@RequestParam int index) {
+        return userService.getActualData(index);
     }
 }
