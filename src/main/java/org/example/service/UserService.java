@@ -4,6 +4,8 @@ import org.example.component.FieldInjectionComponent;
 import org.example.entity.UserEntity;
 import org.example.model.UserMetadataModel;
 import org.example.repository.RealUserRepository;
+import org.hibernate.annotations.Cache;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.repository.UserRepository;
@@ -41,7 +43,9 @@ public class UserService {
         throw new RuntimeException("rolling back forced!");
     }
     @Transactional
+    @Cacheable("users")
     public UserMetadataModel getActualData(int index) {
+        System.out.println("Wondering what wil be logged...");
         UserEntity userEntity = realUserRepository.findAll().get(index);
         return new UserMetadataModel(userEntity.getName(), userEntity.getTranaction());
     }
