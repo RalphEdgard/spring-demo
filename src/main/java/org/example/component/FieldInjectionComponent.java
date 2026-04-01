@@ -16,5 +16,4 @@ public class FieldInjectionComponent {
         loggerUtil.log("this is a message from the logger...");
         return "you executed field injection component";
     }
-
 }
